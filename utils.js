@@ -47,6 +47,14 @@ class Game {
         this.river = []
     }
 
+    getActivePlayerCount() {
+        let counter = 0
+        this.players.forEach(el => {
+            if (!el.isFold) counter++
+        })
+        return counter
+    }
+
     isEveryOneFold() {
         let counter = 0
         for (let i = 0; i < this.players.length; i++) {
@@ -87,11 +95,13 @@ class Game {
     }
 
     setIndexNextPlayer() {
+        this.currentPlayerIndex = this.getIndexNextPlayer()
+    }
+
+    getIndexNextPlayer() {
         for (let i = 1; i < this.players.length; i++) {
             const j = (i + this.currentPlayerIndex) % this.players.length
-            if (this.players[j].isFold) continue
-            this.currentPlayerIndex = j
-            return
+            if (!this.players[j].isFold) return j
         }
         throw Error("impossible player index")
     }

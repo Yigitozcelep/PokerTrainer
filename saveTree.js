@@ -13,7 +13,8 @@ const saveTree = async (game) => {
     updateActivePlayer(game)
     
     for (let i = 0; i < 4; i++) {
-        while (game.lastBetIndex != game.currentPlayerIndex && !game.isEveryOneFold()) {
+        let counter = 0
+        while (game.lastBetIndex != game.currentPlayerIndex && !game.isEveryOneFold() && counter != game.getActivePlayerCount()) {
             const currentPlayer = game.players[game.currentPlayerIndex]
             const betOption = await getBetOptionResult(game)
             
@@ -25,7 +26,7 @@ const saveTree = async (game) => {
                 game.bet(currentPlayer, game.lastBet)
             }
             else if (betOption == "check") {
-                // No action needed for check
+                counter++
             }
             else if (betOption == "all in") {
                 game.lastBetIndex = game.currentPlayerIndex
@@ -42,7 +43,6 @@ const saveTree = async (game) => {
                 game.lastBetIndex = game.currentPlayerIndex
                 game.bet(currentPlayer, (betOption[0] - "0") * game.lastBet)
             }
-            
             game.setIndexNextPlayer()
             savedStates.push(betOption)
             updateActivePlayer(game)
@@ -62,6 +62,7 @@ const saveTree = async (game) => {
             else break
         }
         game.lastBetIndex = -1
+        game.lastBet = 0
         game.setFirstPlayer()
         game.players.forEach(el => el.currentBet = 0)
         updateActivePlayer(game)
