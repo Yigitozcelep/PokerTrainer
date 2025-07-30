@@ -3,6 +3,7 @@ import getPosition from "../questions/getPosition.js";
 import getPros from "../questions/getPros.js";
 import getStack from "../questions/getStack.js";
 import getTreeType from "../questions/getTreeType.js";
+import getDescription from "../questions/getDescription.js";
 import { Game } from "../utils.js";
 import { saveTree } from "../saveTree.js";
 import {displayBet, displayCardsAtCenter, displayPlayers, displayTable, getBetOptionResult } from "../table/table.js";
@@ -56,10 +57,10 @@ const saveTreeButton = async() => {
         await getPros(game);
         const userHand = await getHands(game);
         await getFlopTurnRiver(game, userHand);
+        await getDescription(game);
         game.adjustTableCoors()
         const table = displayTable(game)
         await saveTree(game);
-        
     } catch (error) {
         console.error('Error during tree setup:', error);
         alert('Error saving tree. Please try again.');

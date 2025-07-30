@@ -37,7 +37,7 @@ class Game {
         this.players = positions.map(el => new Player(el, new TableCoors(0, 0)))
         this.totalMoneyInTheMiddle = 0
         this.lastBet = 0
-
+        this.description = ""
         this.lastBetIndex = this.getBigBlindIndex()
         this.currentPlayerIndex = this.getEpIndex()
         console.log("initial: ", this.lastBetIndex, this.currentPlayerIndex)
@@ -126,6 +126,16 @@ class Game {
 
     getEpIndex() {
         return this.players.findIndex(el => el.position == "EP")
+    }
+
+
+    isEveryOneAllIn() {
+        for (let i = 0; i < this.players.length; i++) {
+            const curPlayer = this.players[i]
+            if (curPlayer.isFold || curPlayer.stack == 0) continue
+            return false
+        }
+        return true
     }
 }
 

@@ -185,6 +185,39 @@
     background: #7f8c8d;
 }
 
+/* Description Modal */
+.description-modal {
+    min-width: 500px;
+}
+
+.description-textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #2c3e50;
+    border-radius: 5px;
+    background: #34495e;
+    color: white;
+    resize: vertical;
+    min-height: 200px;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.description-textarea:focus {
+    outline: none;
+    border-color: #3498db;
+    background: #2c3e50;
+}
+
+.description-textarea.error {
+    border-color: #e74c3c;
+}
+
+.description-textarea::placeholder {
+    color: #7f8c8d;
+}
+
 /* Tree Type Selection */
 .tree-options-container {
     display: flex;

@@ -14,7 +14,7 @@ const saveTree = async (game) => {
     
     for (let i = 0; i < 4; i++) {
         let counter = 0
-        while (game.lastBetIndex != game.currentPlayerIndex && !game.isEveryOneFold() && counter != game.getActivePlayerCount()) {
+        while (game.lastBetIndex != game.currentPlayerIndex && !game.isEveryOneFold() && counter != game.getActivePlayerCount() && !game.isEveryOneAllIn()) {
             const currentPlayer = game.players[game.currentPlayerIndex]
             const betOption = await getBetOptionResult(game)
             
