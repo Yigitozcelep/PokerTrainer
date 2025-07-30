@@ -176,6 +176,27 @@ const updatePlayerStack = (player) => {
     }
 }
 
+const updateActivePlayer = (game) => {
+    // Remove active class from all players
+    document.querySelectorAll('.player-seat').forEach(seat => {
+        seat.classList.remove('active-player');
+    });
+    
+    // Add active class to current player
+    const currentPlayer = game.players[game.currentPlayerIndex];
+    const activePlayerSeat = document.querySelector(`[data-position="${currentPlayer.position}"]`);
+    if (activePlayerSeat) {
+        activePlayerSeat.classList.add('active-player');
+    }
+}
+
+const updateFoldedPlayer = (player) => {
+    const playerSeat = document.querySelector(`[data-position="${player.position}"]`);
+    if (!playerSeat) return;
+    
+    playerSeat.classList.add('folded');
+}
+
 const displayBet = (player, amount, game) => {
     // Get player seat element by data-position attribute
     const playerSeat = document.querySelector(`[data-position="${player.position}"]`);
@@ -277,4 +298,4 @@ const getBetOptionResult = async (game) => {
 }
 
 
-export { displayTable, displayPlayers, showCommunityCards, showActionButtons, displayBet, getBetOptionResult, updatePlayerStack };
+export { displayTable, displayPlayers, showCommunityCards, showActionButtons, displayBet, getBetOptionResult, updatePlayerStack, updateActivePlayer, updateFoldedPlayer };

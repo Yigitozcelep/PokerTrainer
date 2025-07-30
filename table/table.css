@@ -154,6 +154,37 @@
     box-shadow: 0 0 15px rgba(231, 76, 60, 0.6);
 }
 
+/* Active player (current turn) */
+.player-seat.active-player {
+    border: 3px solid #f1c40f;
+    box-shadow: 0 0 20px rgba(241, 196, 15, 0.8);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 20px rgba(241, 196, 15, 0.8);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(241, 196, 15, 1);
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(241, 196, 15, 0.8);
+    }
+}
+
+/* Folded player */
+.player-seat.folded {
+    opacity: 0.4;
+    background: #1a1a1a;
+}
+
+.player-seat.folded .player-position,
+.player-seat.folded .player-stack,
+.player-seat.folded .player-type {
+    color: #666;
+}
+
 /* Empty seat */
 .player-seat.empty {
     background: #34495e;
