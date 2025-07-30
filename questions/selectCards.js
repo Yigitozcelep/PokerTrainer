@@ -17,7 +17,7 @@ const selectCards = async (title, maxCards) => {
 
         const cardsGrid = document.createElement('div');
         cardsGrid.className = 'cards-grid';
-
+        
         const selectedCards = [];
         const cardButtons = [];
 

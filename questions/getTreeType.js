@@ -40,7 +40,8 @@ const getTreeType = async (game) => {
                 
                 document.body.removeChild(container);
                 document.body.removeChild(overlay);
-                resolve(option.value);
+                game.isPostflopInclude = true
+                resolve()
             });
 
             optionsContainer.appendChild(optionButton);

@@ -47,8 +47,22 @@ class Game {
         this.turn = ""
         this.river = ""
     }
+
+    isEveryOneFold() {
+        for (let i = 0; i < this.players.length; i++) {
+            if (!this.players[i].isFold) return false;
+        }
+        return true
+    }
     
-    
+    setFirstPlayer() {
+        for (let i = 1; i < this.players.length + 1; i++) {
+            let j = i % this.players.length
+            if (this.players[j].isFold) continue
+            this.currentPlayerIndex = j
+            return
+        }
+    }
 
     adjustTableCoors() {
         let playerIndex = this.players.findIndex(el => el.isRealPlayer)

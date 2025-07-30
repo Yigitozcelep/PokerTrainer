@@ -31,7 +31,7 @@ const selectOptionalCard = async (title, description) => {
             document.body.removeChild(container);
             document.body.removeChild(overlay);
             const cards = await selectCards(title + ' (1 card)', 1);
-            resolve(cards[0]);
+            resolve(cards);
         });
 
         skipButton.addEventListener('click', () => {
@@ -57,9 +57,9 @@ const getFlopTurnRiver = async (game) => {
     const turn = await selectOptionalCard('Select Turn', 'Would you like to include a turn card?');
     const river = turn ? await selectOptionalCard('Select River', 'Would you like to include a river card?') : null;
     
-    game.flop = flop.join(' ')
+    game.flop = flop
     game.turn = turn || null,
     game.river = river || null
-}
+} 
 
 export default getFlopTurnRiver;

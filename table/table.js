@@ -141,6 +141,55 @@ const showCommunityCards = (cards) => {
     });
 }
 
+const displayCardsAtCenter = (cards) => {
+    let communityCardsContainer = document.getElementById('community-cards');
+    
+    // If container doesn't exist, try to find the table center or create it
+    if (!communityCardsContainer) {
+        const tableCenter = document.querySelector('.table-center');
+        if (tableCenter) {
+            communityCardsContainer = tableCenter.querySelector('.community-cards');
+        }
+        
+        // If still not found, create the container
+        if (!communityCardsContainer) {
+            const pokerTable = document.querySelector('.poker-table');
+            if (!pokerTable) {
+                console.error('Poker table not found. Please call displayTable first.');
+                return;
+            }
+            
+            // Find or create table center
+            let tableCenter = pokerTable.querySelector('.table-center');
+            if (!tableCenter) {
+                tableCenter = document.createElement('div');
+                tableCenter.className = 'table-center';
+                pokerTable.appendChild(tableCenter);
+            }
+            
+            // Create community cards container
+            communityCardsContainer = document.createElement('div');
+            communityCardsContainer.className = 'community-cards';
+            communityCardsContainer.id = 'community-cards';
+            tableCenter.appendChild(communityCardsContainer);
+        }
+    }
+    
+    communityCardsContainer.innerHTML = '';
+    
+    if (!Array.isArray(cards)) {
+        console.error('Cards must be provided as an array');
+        return;
+    }
+    
+    cards.forEach((card, index) => {
+        const cardElement = createCardElement(card);
+        cardElement.style.animationDelay = `${index * 0.1}s`;
+        cardElement.classList.add('card-deal-animation');
+        communityCardsContainer.appendChild(cardElement);
+    });
+}
+
 const showActionButtons = (actions) => {
     // Remove existing action buttons
     const existingButtons = document.querySelector('.action-buttons');
@@ -298,4 +347,4 @@ const getBetOptionResult = async (game) => {
 }
 
 
-export { displayTable, displayPlayers, showCommunityCards, showActionButtons, displayBet, getBetOptionResult, updatePlayerStack, updateActivePlayer, updateFoldedPlayer };
+export { displayTable, displayPlayers, showCommunityCards, showActionButtons, displayBet, getBetOptionResult, updatePlayerStack, updateActivePlayer, updateFoldedPlayer, displayCardsAtCenter };
