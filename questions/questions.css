@@ -108,7 +108,6 @@
 .card-button.selected {
     background: #3498db;
     color: white;
-    transform: scale(1.1);
 }
 
 /* Confirm Button */

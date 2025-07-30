@@ -5,6 +5,7 @@ import getStack from "../questions/getStack.js";
 import getTreeType from "../questions/getTreeType.js";
 import { Game } from "../utils.js";
 import { saveTree } from "../saveTree.js";
+import { displayPlayers, displayTable } from "../table/table.js";
 
 const displayMainPage = () => {
     const body = document.body;
@@ -56,6 +57,8 @@ const saveTreeButton = async() => {
         await getHands(game);
         await getPros(game);
         
+        const table = displayTable(game)
+        //displayPlayers(game, table)
         console.log('Game configuration:', game);
         
         // Save the tree configuration

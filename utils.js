@@ -1,6 +1,6 @@
 
 
-const positions = ["BTN", "SB", "BB", "EP", "MP", "BTN"]
+const positions = ["BTN", "SB", "BB", "EP", "MP", "CO"]
 
 class Player {
     constructor(position) {

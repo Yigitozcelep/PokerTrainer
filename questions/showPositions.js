@@ -41,12 +41,10 @@ const showPositions = async (game, onSelect, multiSelect = false) => {
                         selectedPositions.add(player.position);
                         button.classList.add('selected');
                         
-                        setTimeout(() => {
-                            document.body.removeChild(container);
-                            document.body.removeChild(overlay);
-                            if (onSelect) onSelect(player.position);
-                            resolve(player.position);
-                        }, 200);
+                        document.body.removeChild(container);
+                        document.body.removeChild(overlay);
+                        if (onSelect) onSelect(player.position);
+                        resolve(player.position);
                     }
                 });
 
