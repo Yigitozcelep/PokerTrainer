@@ -49,10 +49,11 @@ class Game {
     }
 
     isEveryOneFold() {
+        let counter = 0
         for (let i = 0; i < this.players.length; i++) {
-            if (!this.players[i].isFold) return false;
+            if (!this.players[i].isFold) counter++
         }
-        return true
+        return counter <= 1
     }
     
     setFirstPlayer() {
@@ -122,8 +123,41 @@ class Game {
 
 const getAvaliableBetOptions = (game) => {
     const currentPlayer = game.players[game.currentPlayerIndex];
-    const options = ["fold", "call"];
     const amountToCall = game.lastBet - currentPlayer.currentBet;
+    
+    // Check if we're on flop, turn, or river and no one has opened the action
+    const isPostflop = game.flop.length > 0 || game.turn.length > 0 || game.river.length > 0;
+    const isActionNotOpened = game.lastBetIndex === -1;
+    
+    if (isPostflop && isActionNotOpened) {
+        const options = ["check"];
+        const pot = game.totalMoneyInTheMiddle;
+        
+        // Add percentage-based bet options
+        if (currentPlayer.stack >= pot * 0.3) {
+            options.push("30%");
+        }
+        if (currentPlayer.stack >= pot * 0.5) {
+            options.push("50%");
+        }
+        if (currentPlayer.stack >= pot * 1.0) {
+            options.push("100%");
+        }
+        if (currentPlayer.stack >= pot * 2.0) {
+            options.push("200%");
+        }
+        if (currentPlayer.stack >= pot * 4.0) {
+            options.push("400%");
+        }
+        if (currentPlayer.stack > 0) {
+            options.push("all in");
+        }
+        
+        return options;
+    }
+    
+    // Original logic for when there's already a bet
+    const options = ["fold", "call"];
     const raiseBase = game.lastBet;
 
     if (currentPlayer.stack >= amountToCall + (2 * raiseBase)) {

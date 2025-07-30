@@ -24,10 +24,19 @@ const saveTree = async (game) => {
             else if (betOption == "call") {
                 game.bet(currentPlayer, game.lastBet)
             }
+            else if (betOption == "check") {
+                // No action needed for check
+            }
             else if (betOption == "all in") {
                 game.lastBetIndex = game.currentPlayerIndex
                 const allInAmount = currentPlayer.stack + currentPlayer.currentBet
                 game.bet(currentPlayer, allInAmount)
+            }
+            else if (betOption.includes("%")) {
+                game.lastBetIndex = game.currentPlayerIndex
+                const percentage = parseInt(betOption) / 100
+                const betAmount = Math.floor(game.totalMoneyInTheMiddle * percentage)
+                game.bet(currentPlayer, betAmount)
             }
             else if (betOption[1] == "x") {
                 game.lastBetIndex = game.currentPlayerIndex
