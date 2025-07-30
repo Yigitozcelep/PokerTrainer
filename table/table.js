@@ -246,6 +246,20 @@ const updateFoldedPlayer = (player) => {
     playerSeat.classList.add('folded');
 }
 
+const clearBetAnimations = () => {
+    // Remove all bet chip animations from the table
+    const betChips = document.querySelectorAll('.bet-chip-animation');
+    betChips.forEach(chip => {
+        chip.remove();
+    });
+    
+    // Also remove any player bet displays
+    const playerBets = document.querySelectorAll('.player-bet');
+    playerBets.forEach(bet => {
+        bet.remove();
+    });
+}
+
 const displayBet = (player, amount, game) => {
     // Get player seat element by data-position attribute
     const playerSeat = document.querySelector(`[data-position="${player.position}"]`);
@@ -347,4 +361,4 @@ const getBetOptionResult = async (game) => {
 }
 
 
-export { displayTable, displayPlayers, showCommunityCards, showActionButtons, displayBet, getBetOptionResult, updatePlayerStack, updateActivePlayer, updateFoldedPlayer, displayCardsAtCenter };
+export { displayTable, displayPlayers, showCommunityCards, showActionButtons, displayBet, getBetOptionResult, updatePlayerStack, updateActivePlayer, updateFoldedPlayer, displayCardsAtCenter, clearBetAnimations };

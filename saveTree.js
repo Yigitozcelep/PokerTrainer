@@ -1,4 +1,4 @@
-import { displayCardsAtCenter, getBetOptionResult, updateActivePlayer, updateFoldedPlayer } from "./table/table.js";
+import { displayCardsAtCenter, getBetOptionResult, updateActivePlayer, updateFoldedPlayer, clearBetAnimations } from "./table/table.js";
 import { Game } from "./utils.js";
 
 /** * @param {Game} game */
@@ -38,18 +38,22 @@ const saveTree = async (game) => {
             savedStates.push(betOption)
             updateActivePlayer(game)
         }
+        
+        clearBetAnimations()
         if (!game.isPostflopInclude) break
         if (i == 0) displayCardsAtCenter(game.flop)
         if (i == 1) {
-            if (game.turn) displayCardsAtCenter(game.flop + game.turn)
+            if (game.turn) displayCardsAtCenter([game.flop[0], game.flop[1], game.flop[2], game.turn[0]])
             else break
         }
-        if (i == 3) {
-            if (game.river) displayCardsAtCenter(game.flop + game.turn + game.river)
+        if (i == 2) {
+            if (game.river) displayCardsAtCenter([game.flop[0], game.flop[1], game.flop[2], game.turn[0], game.river[0]])
             else break
         }
         game.lastBetIndex = -1
         game.setFirstPlayer()
+        game.players.forEach(el => el.currentBet = 0)
+        updateActivePlayer(game)
     }
     downloadGame(savedPlayers, savedStates)
 }; 
