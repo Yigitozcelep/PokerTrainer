@@ -8,6 +8,7 @@ import { Game } from "../utils.js";
 import { saveTree } from "../saveTree.js";
 import {displayBet, displayCardsAtCenter, displayPlayers, displayTable, getBetOptionResult } from "../table/table.js";
 import getFlopTurnRiver from "../questions/getFlopTurnRiver.js";
+import { trainGame } from "../train.js";
 
 const displayMainPage = () => {
     const body = document.body;
@@ -118,7 +119,12 @@ const getFiles = async () => {
 
 
 const trainTreeButton = async () => {
-    const data = await getFiles()[0]
+    const files = await getFiles()
+    if (!files || files.length === 0) {
+        alert('No files selected. Please select a folder with JSON files.')
+        return
+    }
+    const data = files[0].data
     const game = new Game()
     console.log("data: ", data)
     game.players = data.players

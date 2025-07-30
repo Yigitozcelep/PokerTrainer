@@ -22,7 +22,7 @@ const trainGame = async (game, actions) => {
             }
             else betOption = actions[actionIndex]
             actionIndex++
-            
+            console.log("bet option: ", betOption)
             if (betOption == "fold") {
                 game.fold(currentPlayer)
                 updateFoldedPlayer(currentPlayer)
@@ -48,8 +48,9 @@ const trainGame = async (game, actions) => {
                 game.lastBetIndex = game.currentPlayerIndex
                 game.bet(currentPlayer, (betOption[0] - "0") * game.lastBet)
             }
+
+            if (!currentPlayer.isRealPlayer) await new Promise((resolve) => setTimeout(resolve, 800))
             game.setIndexNextPlayer()
-            savedStates.push(betOption)
             updateActivePlayer(game)
         }
         
@@ -74,3 +75,4 @@ const trainGame = async (game, actions) => {
     }
 }; 
 
+export {trainGame}
