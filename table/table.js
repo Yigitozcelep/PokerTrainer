@@ -1,5 +1,8 @@
 
 const displayTable = (game) => {
+    // Store game reference globally for updates
+    window.currentGame = game;
+    
     // Clear the body and create table container
     document.body.innerHTML = '';
     
@@ -46,10 +49,23 @@ const displayTable = (game) => {
 }
 
 const displayPlayers = (game, tableElement) => {
-    // Display players in their positions
+    // Table dimensions are fixed in CSS: 700px x 350px
+    const tableWidth = 700;
+    const tableHeight = 350;
+    const centerX = tableWidth / 2;
+    const centerY = tableHeight / 2;
+    
     game.players.forEach((player, index) => {
         const playerSeat = document.createElement('div');
-        playerSeat.className = `player-seat ${player.position}`;
+        // Use position name for CSS class identification
+        playerSeat.className = `player-seat`;
+        playerSeat.setAttribute('data-position', player.position);
+        
+        // Use the player's table coordinates
+        playerSeat.style.position = 'absolute';
+        playerSeat.style.left = `${centerX + player.tableCoors.offsetX}px`;
+        playerSeat.style.top = `${centerY + player.tableCoors.offsetY}px`;
+        playerSeat.style.transform = 'translate(-50%, -50%)';
         
         // Add real player highlight
         if (player.isRealPlayer) {
@@ -76,7 +92,17 @@ const displayPlayers = (game, tableElement) => {
         stackDisplay.textContent = `$${player.stack}`;
         playerSeat.appendChild(stackDisplay);
         
-        // Player cards (only show for real player)
+        // Display current bet if any
+        if (player.currentBet > 0) {
+            const betDisplay = document.createElement('div');
+            betDisplay.className = 'player-bet';
+            betDisplay.textContent = `$${player.currentBet}`;
+            playerSeat.appendChild(betDisplay);
+        }
+        
+        tableElement.appendChild(playerSeat);
+        
+        // Player cards (only show for real player) - positioned absolutely
         if (player.isRealPlayer && player.hand) {
             const cardsContainer = document.createElement('div');
             cardsContainer.className = 'player-cards';
@@ -90,8 +116,6 @@ const displayPlayers = (game, tableElement) => {
             
             playerSeat.appendChild(cardsContainer);
         }
-        
-        tableElement.appendChild(playerSeat);
     });
 }
 
@@ -144,4 +168,64 @@ const showActionButtons = (actions) => {
     document.querySelector('.table-container').appendChild(actionButtonsContainer);
 }
 
-export { displayTable, displayPlayers, showCommunityCards, showActionButtons };
+
+const displayBet = (player, amount) => {
+    // Get player seat element by data-position attribute
+    const playerSeat = document.querySelector(`[data-position="${player.position}"]`);
+    if (!playerSeat) return;
+    
+    // Create animated bet chip
+    const betChip = document.createElement('div');
+    betChip.className = 'bet-chip-animation';
+    betChip.textContent = `$${amount}`;
+    
+    // Get player seat position
+    const playerRect = playerSeat.getBoundingClientRect();
+    const tableRect = document.querySelector('.poker-table').getBoundingClientRect();
+    
+    // Calculate starting position (from player)
+    const startX = playerRect.left + playerRect.width / 2 - tableRect.left;
+    const startY = playerRect.top + playerRect.height / 2 - tableRect.top;
+    
+    // Calculate end position (center of table, slightly offset based on player position)
+    const centerX = tableRect.width / 2;
+    const centerY = tableRect.height / 2;
+    
+    // Use player's table bet coordinates
+    const { offsetX, offsetY } = player.tableCoors;
+    
+    const endX = centerX + offsetX;
+    const endY = centerY + offsetY;
+    
+    // Set initial position
+    betChip.style.left = `${startX}px`;
+    betChip.style.top = `${startY}px`;
+    betChip.style.transform = 'translate(-50%, -50%)';
+    
+    // Add to poker table
+    document.querySelector('.poker-table').appendChild(betChip);
+    
+    // Animate to final position
+    setTimeout(() => {
+        betChip.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        betChip.style.left = `${endX}px`;
+        betChip.style.top = `${endY}px`;
+    }, 10);
+    
+    // Update pot size
+    const potElement = document.querySelector('.pot-size');
+    if (potElement && window.currentGame) {
+        potElement.textContent = `Pot: $${window.currentGame.totalMoneyInTheMiddle}`;
+    }
+    
+    // Remove bet display from player seat after animation
+    setTimeout(() => {
+        const playerBetDisplay = playerSeat.querySelector('.player-bet');
+        if (playerBetDisplay) {
+            playerBetDisplay.remove();
+        }
+    }, 800);
+}
+
+
+export { displayTable, displayPlayers, showCommunityCards, showActionButtons, displayBet };

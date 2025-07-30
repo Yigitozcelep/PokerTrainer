@@ -8,8 +8,8 @@
     background: #1a1a1a;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    padding-top: 120px;
+    align-items: center;
+    padding-bottom: 100px;
     overflow: hidden;
 }
 
@@ -82,38 +82,7 @@
     color: white;
 }
 
-/* Position-specific placements */
-.player-seat.BTN {
-    bottom: -100px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.player-seat.SB {
-    bottom: -50px;
-    left: 10px;
-}
-
-.player-seat.BB {
-    top: -50px;
-    left: 10px;
-}
-
-.player-seat.EP {
-    top: -100px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.player-seat.MP {
-    top: -50px;
-    right: 10px;
-}
-
-.player-seat.CO {
-    bottom: -50px;
-    right: 10px;
-}
+/* Player seats now use dynamic positioning from JavaScript */
 
 /* Player info */
 .player-position {
@@ -123,8 +92,14 @@
     margin-bottom: 5px;
 }
 
+.real-player .player-position {
+    color: #fff;
+    font-size: 16px;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
 .player-type {
-    font-size: 12px;
+    font-size: 10px;
     color: #e74c3c;
     margin-bottom: 5px;
 }
@@ -135,23 +110,31 @@
     margin-bottom: 10px;
 }
 
+.real-player .player-stack {
+    color: #fff;
+    font-size: 18px;
+}
+
 .player-cards {
+    position: absolute;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    gap: 5px;
+    gap: 3px;
     justify-content: center;
-    margin-top: 10px;
 }
 
 .player-card {
-    width: 40px;
-    height: 55px;
+    width: 36px;
+    height: 50px;
     background: white;
     border: 1px solid #333;
     border-radius: 3px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: bold;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
@@ -166,8 +149,9 @@
 
 /* Real player highlight */
 .player-seat.real-player {
-    background: #27ae60;
-    border: 2px solid #2ecc71;
+    background: #e74c3c;
+    border: 3px solid #c0392b;
+    box-shadow: 0 0 15px rgba(231, 76, 60, 0.6);
 }
 
 /* Empty seat */
@@ -236,4 +220,53 @@
 .action-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Bet chips */
+.bet-chip {
+    position: absolute;
+    background: #f39c12;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border: 2px solid #e67e22;
+    z-index: 10;
+}
+
+/* Bet display on player seats */
+.player-bet {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #f39c12;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 13px;
+    font-weight: bold;
+    border: 1px solid #e67e22;
+}
+
+/* Bet chip animation */
+.bet-chip-animation {
+    position: absolute;
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 13px;
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+    border: 2px solid #d35400;
+    z-index: 100;
+    pointer-events: none;
+    white-space: nowrap;
+    will-change: transform, left, top;
 }

@@ -1,7 +1,7 @@
 import { displayMainPage } from "./mainPage/mainPage.js";
 
 const loadMainPage = () => {
-    displayMainPage()   
+   displayMainPage()   
 }
 
 document.addEventListener('DOMContentLoaded', () => {
