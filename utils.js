@@ -1,3 +1,4 @@
+import { displayBet } from "./table/table.js"
 
 
 class TableCoors {
@@ -50,7 +51,18 @@ class Game {
         this.totalMoneyInTheMiddle += amount;
         this.lastBet = amount;
         player.currentBet += amount;
+        displayBet(player, player.currentBet, this)
         return true;
+    }
+    
+    betSmallBlind() {
+        const sb = this.players.find(el => el.position == "SB")
+        this.bet(sb, 1)
+    }
+
+    betBigBlind() {
+        const bb = this.players.find(el => el.position == "BB")
+        this.bet(bb, 2)
     }
 }
 

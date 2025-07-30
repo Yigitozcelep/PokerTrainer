@@ -59,13 +59,7 @@ const saveTreeButton = async() => {
         
         game.adjustTableCoors()
         const table = displayTable(game)
-        game.players.forEach(el => displayBet(el, 20, game))
-
-        const res = await getBetOptionResult(game)
-        console.log("res: ", res)
-        console.log('Game configuration:', game);
         
-        // Save the tree configuration
         await saveTree(game);
         
     } catch (error) {
