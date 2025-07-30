@@ -35,7 +35,6 @@ const positions = ['BTN','SB','BB','EP','MP','CO']
 class Game {
     constructor() {
         this.players = positions.map(el => new Player(el, new TableCoors(0, 0)))
-        this.isPostflopInclude = false
         this.totalMoneyInTheMiddle = 0
         this.lastBet = 0
 

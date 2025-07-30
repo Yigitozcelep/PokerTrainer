@@ -49,8 +49,10 @@ const saveTree = async (game) => {
         }
         
         clearBetAnimations()
-        if (!game.isPostflopInclude) break
-        if (i == 0) displayCardsAtCenter(game.flop)
+        if (i == 0) {
+            if (game.flop) displayCardsAtCenter([game.flop[0], game.flop[1], game.flop[2]])
+            else break
+        }
         if (i == 1) {
             if (game.turn) displayCardsAtCenter([game.flop[0], game.flop[1], game.flop[2], game.turn[0]])
             else break

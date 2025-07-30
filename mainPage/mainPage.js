@@ -51,17 +51,11 @@ const saveTreeButton = async() => {
     try {
         const game = new Game();
         
-        // Get all game settings
-        await getTreeType(game);
-
         await getStack(game);
         await getPosition(game);
-        
-        const userHand = await getHands(game);
-        
-        if (game.isPostflopInclude) await getFlopTurnRiver(game, userHand);
         await getPros(game);
-        
+        const userHand = await getHands(game);
+        await getFlopTurnRiver(game, userHand);
         game.adjustTableCoors()
         const table = displayTable(game)
         await saveTree(game);
