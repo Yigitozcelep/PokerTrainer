@@ -6,6 +6,7 @@ import getTreeType from "../questions/getTreeType.js";
 import { Game } from "../utils.js";
 import { saveTree } from "../saveTree.js";
 import {displayBet, displayPlayers, displayTable, getBetOptionResult } from "../table/table.js";
+import getFlopTurnRiver from "../questions/getFlopTurnRiver.js";
 
 const displayMainPage = () => {
     const body = document.body;
@@ -52,6 +53,9 @@ const saveTreeButton = async() => {
         
         // Get all game settings
         await getTreeType(game);
+
+        if (game.isPostflopInclude) await getFlopTurnRiver(game)
+
         await getStack(game);
         await getPosition(game);
         await getHands(game);

@@ -42,8 +42,12 @@ class Game {
         this.lastBetIndex = this.getBigBlindIndex()
         this.currentPlayerIndex = this.getEpIndex()
         console.log("initial: ", this.lastBetIndex, this.currentPlayerIndex)
-    }
 
+        this.flop = ""
+        this.turn = ""
+        this.river = ""
+    }
+    
     
 
     adjustTableCoors() {
