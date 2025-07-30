@@ -1,4 +1,4 @@
-const selectCards = async (title, maxCards) => {
+const selectCards = async (title, maxCards, optional = false) => {
     return new Promise((resolve) => {
         const suits = ['♠', '♥', '♦', '♣'];
         const ranks = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
@@ -41,9 +41,9 @@ const selectCards = async (title, maxCards) => {
                     selectedDisplay.textContent = selectedCards.join(' ');
                     
                     if (selectedCards.length === maxCards) {
-                        confirmButton.classList.remove('hidden');
-                    } else {
-                        confirmButton.classList.add('hidden');
+                        document.body.removeChild(container);
+                        document.body.removeChild(overlay);
+                        resolve(selectedCards);
                     }
                 });
 
@@ -54,17 +54,50 @@ const selectCards = async (title, maxCards) => {
 
         container.appendChild(cardsGrid);
 
-        const confirmButton = document.createElement('button');
-        confirmButton.textContent = 'Confirm Selection';
-        confirmButton.className = 'confirm-button hidden';
+        const buttonsContainer = document.createElement('div');
+        buttonsContainer.className = 'buttons-container';
+        buttonsContainer.style.marginTop = '20px';
 
-        confirmButton.addEventListener('click', () => {
-            document.body.removeChild(container);
-            document.body.removeChild(overlay);
-            resolve(selectedCards);
-        });
+        if (!optional) {
+            container.appendChild(buttonsContainer);
+        }
 
-        container.appendChild(confirmButton);
+        if (optional) {
+            const skipButton = document.createElement('button');
+            skipButton.textContent = 'No Flop Cards';
+            skipButton.className = 'skip-button';
+            skipButton.style.cssText = `
+                margin-top: 20px;
+                padding: 12px 24px;
+                background-color: #6c757d;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 16px;
+                font-weight: 500;
+                transition: background-color 0.2s;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            `;
+            
+            skipButton.addEventListener('mouseenter', () => {
+                skipButton.style.backgroundColor = '#5a6268';
+            });
+            
+            skipButton.addEventListener('mouseleave', () => {
+                skipButton.style.backgroundColor = '#6c757d';
+            });
+            
+            skipButton.addEventListener('click', () => {
+                document.body.removeChild(container);
+                document.body.removeChild(overlay);
+                resolve(null);
+            });
+            
+            container.appendChild(skipButton);
+        }
 
         const overlay = document.createElement('div');
         overlay.className = 'question-overlay';

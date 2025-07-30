@@ -1,37 +1,84 @@
+import selectCards from "./selectCards.js";
 
-import selectCards from './selectCards.js';
-
-const selectOptionalCard = async (title, description) => {
+const selectOptionalCard = async (title) => {
     return new Promise((resolve) => {
+        const suits = ['♠', '♥', '♦', '♣'];
+        const ranks = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
+        
         const container = document.createElement('div');
-        container.className = 'question-modal';
+        container.className = 'question-modal cards-modal';
 
         const titleElement = document.createElement('h2');
         titleElement.textContent = title;
         titleElement.className = 'question-title';
         container.appendChild(titleElement);
 
-        const descElement = document.createElement('p');
-        descElement.textContent = description;
-        descElement.className = 'question-description';
-        container.appendChild(descElement);
+        const selectedDisplay = document.createElement('div');
+        selectedDisplay.className = 'selected-cards-display';
+        container.appendChild(selectedDisplay);
 
-        const buttonsContainer = document.createElement('div');
-        buttonsContainer.className = 'buttons-container';
-
-        const selectButton = document.createElement('button');
-        selectButton.textContent = 'Select Card';
-        selectButton.className = 'option-button';
+        const cardsGrid = document.createElement('div');
+        cardsGrid.className = 'cards-grid';
         
-        const skipButton = document.createElement('button');
-        skipButton.textContent = 'No ' + (title.includes('Turn') ? 'Turn' : 'River');
-        skipButton.className = 'option-button secondary';
+        const selectedCards = [];
+        const cardButtons = [];
 
-        selectButton.addEventListener('click', async () => {
-            document.body.removeChild(container);
-            document.body.removeChild(overlay);
-            const cards = await selectCards(title + ' (1 card)', 1);
-            resolve(cards);
+        suits.forEach(suit => {
+            ranks.forEach(rank => {
+                const card = rank + suit;
+                const button = document.createElement('button');
+                button.textContent = card;
+                button.className = `card-button ${suit === '♥' || suit === '♦' ? 'red-suit' : 'black-suit'}`;
+
+                button.addEventListener('click', () => {
+                    if (selectedCards.includes(card)) {
+                        const index = selectedCards.indexOf(card);
+                        selectedCards.splice(index, 1);
+                        button.classList.remove('selected');
+                    } else if (selectedCards.length < 1) {
+                        selectedCards.push(card);
+                        button.classList.add('selected');
+                        
+                        selectedDisplay.textContent = card;
+                        
+                        document.body.removeChild(container);
+                        document.body.removeChild(overlay);
+                        resolve(selectedCards);
+                    }
+                });
+
+                cardButtons.push(button);
+                cardsGrid.appendChild(button);
+            });
+        });
+
+        container.appendChild(cardsGrid);
+
+        const skipButton = document.createElement('button');
+        skipButton.textContent = 'No ' + (title.includes('Turn') ? 'Turn' : 'River') + ' Card';
+        skipButton.className = 'skip-button';
+        skipButton.style.cssText = `
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        `;
+        
+        skipButton.addEventListener('mouseenter', () => {
+            skipButton.style.backgroundColor = '#5a6268';
+        });
+        
+        skipButton.addEventListener('mouseleave', () => {
+            skipButton.style.backgroundColor = '#6c757d';
         });
 
         skipButton.addEventListener('click', () => {
@@ -40,9 +87,7 @@ const selectOptionalCard = async (title, description) => {
             resolve(null);
         });
 
-        buttonsContainer.appendChild(selectButton);
-        buttonsContainer.appendChild(skipButton);
-        container.appendChild(buttonsContainer);
+        container.appendChild(skipButton);
 
         const overlay = document.createElement('div');
         overlay.className = 'question-overlay';
@@ -53,12 +98,12 @@ const selectOptionalCard = async (title, description) => {
 };
 
 const getFlopTurnRiver = async (game) => {
-    const flop = await selectCards('Select Flop (3 cards)', 3);
-    const turn = await selectOptionalCard('Select Turn', 'Would you like to include a turn card?');
-    const river = turn ? await selectOptionalCard('Select River', 'Would you like to include a river card?') : null;
+    const flop = await selectCards('Select Flop (3 cards)', 3, true);
+    const turn = flop ? await selectOptionalCard('Select Turn') : null;
+    const river = turn ? await selectOptionalCard('Select River') : null;
     
-    game.flop = flop
-    game.turn = turn || null,
+    game.flop = flop || null
+    game.turn = turn || null
     game.river = river || null
 } 
 
