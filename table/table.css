@@ -117,26 +117,26 @@
 
 .player-cards {
     position: absolute;
-    bottom: -60px;
+    bottom: -90px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 3px;
+    gap: 5px;
     justify-content: center;
 }
 
 .player-card {
-    width: 36px;
-    height: 50px;
+    width: 54px;
+    height: 75px;
     background: white;
-    border: 1px solid #333;
-    border-radius: 3px;
+    border: 2px solid #333;
+    border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 13px;
+    font-size: 20px;
     font-weight: bold;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
 }
 
 .player-card.red {
@@ -326,15 +326,15 @@
 }
 
 /* Bet multiplier buttons */
-.bet-option-button.2bet,
-.bet-option-button.3bet,
-.bet-option-button.4bet {
+.bet-option-button.bet2x,
+.bet-option-button.bet3x,
+.bet-option-button.bet4x {
     background: linear-gradient(135deg, #27ae60, #229954);
     color: white;
 }
 
-.bet-option-button.2bet:hover,
-.bet-option-button.3bet:hover,
-.bet-option-button.4bet:hover {
+.bet-option-button.bet2x:hover,
+.bet-option-button.bet3x:hover,
+.bet-option-button.bet4x:hover {
     background: linear-gradient(135deg, #229954, #1e8449);
 }
