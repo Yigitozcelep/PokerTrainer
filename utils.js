@@ -54,4 +54,10 @@ class Game {
     }
 }
 
-export { Player, Game };
+
+const getAvaliableBetOptions = (game) => {
+    // it returns bet list of bet options with the given circumstances
+    return ["fold", "call", "2x", "3x", "4x"]
+}
+
+export { Player, Game, getAvaliableBetOptions};

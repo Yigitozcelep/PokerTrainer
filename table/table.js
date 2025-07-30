@@ -1,9 +1,6 @@
+import { getAvaliableBetOptions } from "../utils.js";
 
 const displayTable = (game) => {
-    // Store game reference globally for updates
-    window.currentGame = game;
-    
-    // Clear the body and create table container
     document.body.innerHTML = '';
     
     const container = document.createElement('div');
@@ -169,7 +166,7 @@ const showActionButtons = (actions) => {
 }
 
 
-const displayBet = (player, amount) => {
+const displayBet = (player, amount, game) => {
     // Get player seat element by data-position attribute
     const playerSeat = document.querySelector(`[data-position="${player.position}"]`);
     if (!playerSeat) return;
@@ -226,8 +223,8 @@ const displayBet = (player, amount) => {
     
     // Update pot size
     const potElement = document.querySelector('.pot-size');
-    if (potElement && window.currentGame) {
-        potElement.textContent = `Pot: $${window.currentGame.totalMoneyInTheMiddle}`;
+    if (potElement) {
+        potElement.textContent = `Pot: $${game.totalMoneyInTheMiddle}`;
     }
     
     // Remove bet display from player seat after animation
@@ -240,4 +237,34 @@ const displayBet = (player, amount) => {
 }
 
 
-export { displayTable, displayPlayers, showCommunityCards, showActionButtons, displayBet };
+const getBetOptionResult = async (game) => {
+    const betOptions = getAvaliableBetOptions(game);
+    
+    return new Promise((resolve) => {
+        const existingButtons = document.querySelector('.bet-options-container');
+        if (existingButtons) {
+            existingButtons.remove();
+        }
+        
+        const betOptionsContainer = document.createElement('div');
+        betOptionsContainer.className = 'bet-options-container';
+        
+        betOptions.forEach(option => {
+            const button = document.createElement('button');
+            button.className = `bet-option-button ${option.toLowerCase().replace('x', 'bet')}`;
+            button.textContent = option.toUpperCase();
+            
+            button.addEventListener('click', () => {
+                betOptionsContainer.remove();
+                resolve(option);
+            });
+            
+            betOptionsContainer.appendChild(button);
+        });
+        
+        document.body.appendChild(betOptionsContainer);
+    });
+}
+
+
+export { displayTable, displayPlayers, showCommunityCards, showActionButtons, displayBet, getBetOptionResult };

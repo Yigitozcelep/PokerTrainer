@@ -271,3 +271,70 @@
     white-space: nowrap;
     will-change: transform, left, top;
 }
+
+/* Bet Options Container */
+.bet-options-container {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Bet Option Buttons */
+.bet-option-button {
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    min-width: 100px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.bet-option-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Fold button */
+.bet-option-button.fold {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+}
+
+.bet-option-button.fold:hover {
+    background: linear-gradient(135deg, #c0392b, #a93226);
+}
+
+/* Call button */
+.bet-option-button.call {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+}
+
+.bet-option-button.call:hover {
+    background: linear-gradient(135deg, #2980b9, #21618c);
+}
+
+/* Bet multiplier buttons */
+.bet-option-button.2bet,
+.bet-option-button.3bet,
+.bet-option-button.4bet {
+    background: linear-gradient(135deg, #27ae60, #229954);
+    color: white;
+}
+
+.bet-option-button.2bet:hover,
+.bet-option-button.3bet:hover,
+.bet-option-button.4bet:hover {
+    background: linear-gradient(135deg, #229954, #1e8449);
+}

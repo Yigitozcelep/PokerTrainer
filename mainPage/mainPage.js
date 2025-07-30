@@ -5,7 +5,7 @@ import getStack from "../questions/getStack.js";
 import getTreeType from "../questions/getTreeType.js";
 import { Game } from "../utils.js";
 import { saveTree } from "../saveTree.js";
-import {displayBet, displayPlayers, displayTable } from "../table/table.js";
+import {displayBet, displayPlayers, displayTable, getBetOptionResult } from "../table/table.js";
 
 const displayMainPage = () => {
     const body = document.body;
@@ -59,8 +59,10 @@ const saveTreeButton = async() => {
         
         game.adjustTableCoors()
         const table = displayTable(game)
-        game.players.forEach(el => displayBet(el, 20))
+        game.players.forEach(el => displayBet(el, 20, game))
 
+        const res = await getBetOptionResult(game)
+        console.log("res: ", res)
         console.log('Game configuration:', game);
         
         // Save the tree configuration
