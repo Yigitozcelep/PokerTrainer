@@ -124,19 +124,29 @@ const trainTreeButton = async () => {
         alert('No files selected. Please select a folder with JSON files.')
         return
     }
-    const data = files[0].data
-    const game = new Game()
-    console.log("data: ", data)
-    game.players = data.players
-    game.description = data.description
-    game.flop = data.flop
-    game.turn = data.turn
-    game.river = data.river
-    const actions = data.states
-    game.adjustTableCoors()
-    const table = displayTable(game)
     
-    trainGame(game, actions)
+    while (true) {
+        const randomIndex = Math.floor(Math.random() * files.length)
+        const data = files[randomIndex].data
+        const game = new Game()
+        console.log("Playing file:", files[randomIndex].name)
+        console.log("data: ", data)
+        game.players = data.players
+        game.description = data.description
+        game.flop = data.flop
+        game.turn = data.turn
+        game.river = data.river
+        const actions = data.states
+        game.adjustTableCoors()
+        const table = displayTable(game)
+        
+        await trainGame(game, actions)
+        
+        const continueTraining = confirm("Continue training with another random file?")
+        if (!continueTraining) {
+            break
+        }
+    }
 }
 
 
