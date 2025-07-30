@@ -1,6 +1,6 @@
 import selectCards from "./selectCards.js";
 
-const selectOptionalCard = async (title) => {
+const selectOptionalCard = async (title, usedCards = []) => {
     return new Promise((resolve) => {
         const suits = ['♠', '♥', '♦', '♣'];
         const ranks = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
@@ -29,6 +29,12 @@ const selectOptionalCard = async (title) => {
                 const button = document.createElement('button');
                 button.textContent = card;
                 button.className = `card-button ${suit === '♥' || suit === '♦' ? 'red-suit' : 'black-suit'}`;
+                
+                const isUsed = usedCards.includes(card);
+                if (isUsed) {
+                    button.classList.add('used-card');
+                    button.disabled = true;
+                }
 
                 button.addEventListener('click', () => {
                     if (selectedCards.includes(card)) {
@@ -97,10 +103,20 @@ const selectOptionalCard = async (title) => {
     });
 };
 
-const getFlopTurnRiver = async (game) => {
-    const flop = await selectCards('Select Flop (3 cards)', 3, true);
-    const turn = flop ? await selectOptionalCard('Select Turn') : null;
-    const river = turn ? await selectOptionalCard('Select River') : null;
+const getFlopTurnRiver = async (game, usedCards = []) => {
+    const allUsedCards = [...usedCards];
+    
+    const flop = await selectCards('Select Flop (3 cards)', 3, true, allUsedCards);
+    if (flop) {
+        allUsedCards.push(...flop);
+    }
+    
+    const turn = flop ? await selectOptionalCard('Select Turn', allUsedCards) : null;
+    if (turn) {
+        allUsedCards.push(...turn);
+    }
+    
+    const river = turn ? await selectOptionalCard('Select River', allUsedCards) : null;
     
     game.flop = flop || null
     game.turn = turn || null

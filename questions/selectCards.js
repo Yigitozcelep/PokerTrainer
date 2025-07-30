@@ -1,4 +1,4 @@
-const selectCards = async (title, maxCards, optional = false) => {
+const selectCards = async (title, maxCards, optional = false, usedCards = []) => {
     return new Promise((resolve) => {
         const suits = ['♠', '♥', '♦', '♣'];
         const ranks = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
@@ -27,6 +27,12 @@ const selectCards = async (title, maxCards, optional = false) => {
                 const button = document.createElement('button');
                 button.textContent = card;
                 button.className = `card-button ${suit === '♥' || suit === '♦' ? 'red-suit' : 'black-suit'}`;
+                
+                const isUsed = usedCards.includes(card);
+                if (isUsed) {
+                    button.classList.add('used-card');
+                    button.disabled = true;
+                }
 
                 button.addEventListener('click', () => {
                     if (selectedCards.includes(card)) {
