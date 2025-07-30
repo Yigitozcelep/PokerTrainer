@@ -72,9 +72,65 @@ const saveTreeButton = async() => {
     }
 }
 
-const trainTreeButton = () => {
-    // read folder recursivly get every file end with .json and save it to the list and return it
+const getFiles = async () => {
+    try {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.webkitdirectory = true;
+        input.directory = true;
+        input.multiple = true;
+        
+        return new Promise((resolve) => {
+            input.addEventListener('change', async (event) => {
+                const files = event.target.files;
+                const jsonFiles = [];
+                
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    if (file.name.endsWith('.json')) {
+                        try {
+                            const text = await file.text();
+                            const data = JSON.parse(text);
+                            jsonFiles.push({
+                                name: file.name,
+                                path: file.webkitRelativePath,
+                                data: data
+                            });
+                        } catch (error) {
+                            console.error(`Error reading file ${file.name}:`, error);
+                        }
+                    }
+                }
+                
+                console.log(`Found ${jsonFiles.length} JSON files`);
+                console.log(jsonFiles)
+                resolve(jsonFiles);
+            });
+            
+            input.click();
+        });
+    } catch (error) {
+        console.error('Error selecting folder:', error);
+        alert('Error selecting folder. Please try again.');
+        return [];
+    }
+}
 
+
+const trainTreeButton = async () => {
+    const data = await getFiles()[0]
+    const game = new Game()
+    console.log("data: ", data)
+    game.players = data.players
+    game.description = data.description
+    game.flop = data.flop
+    game.turn = data.turn
+    game.river = data.river
+    const actions = data.states
+    game.adjustTableCoors()
+    const table = displayTable(game)
+    
+    trainGame(game, actions)
 }
 
 
