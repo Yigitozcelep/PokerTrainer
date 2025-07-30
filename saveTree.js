@@ -67,15 +67,20 @@ const saveTree = async (game) => {
         game.players.forEach(el => el.currentBet = 0)
         updateActivePlayer(game)
     }
-    downloadGame(savedPlayers, savedStates)
+    
+    downloadGame(savedPlayers, savedStates, game.description, game.flop, game.turn, game.river)
 }; 
 
 
 
-const downloadGame = (savedPlayers, savedStates) => {
+const downloadGame = (savedPlayers, savedStates, description, flop, turn, river) => {
     const gameData = {
         players: JSON.parse(savedPlayers),
         states: savedStates,
+        description: description,
+        flop: flop,
+        turn: turn,
+        river: river,
         timestamp: new Date().toISOString()
     };
     

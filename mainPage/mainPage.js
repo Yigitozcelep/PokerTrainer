@@ -73,7 +73,8 @@ const saveTreeButton = async() => {
 }
 
 const trainTreeButton = () => {
-    
+    // read folder recursivly get every file end with .json and save it to the list and return it
+
 }
 
 
