@@ -9,7 +9,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: 100px;
+    padding-bottom: 200px;
     overflow: hidden;
 }
 
@@ -239,9 +239,10 @@
 /* Bet display on player seats */
 .player-bet {
     position: absolute;
-    bottom: -25px;
+    top: 100%;
     left: 50%;
     transform: translateX(-50%);
+    margin-top: 10px;
     background: #f39c12;
     color: white;
     padding: 4px 10px;

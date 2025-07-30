@@ -187,15 +187,27 @@ const displayBet = (player, amount) => {
     const startX = playerRect.left + playerRect.width / 2 - tableRect.left;
     const startY = playerRect.top + playerRect.height / 2 - tableRect.top;
     
-    // Calculate end position (center of table, slightly offset based on player position)
+    // Calculate end position (in front of player, towards center of table)
     const centerX = tableRect.width / 2;
     const centerY = tableRect.height / 2;
     
-    // Use player's table bet coordinates
-    const { offsetX, offsetY } = player.tableCoors;
+    // Get player's position
+    const playerX = centerX + player.tableCoors.offsetX;
+    const playerY = centerY + player.tableCoors.offsetY;
     
-    const endX = centerX + offsetX;
-    const endY = centerY + offsetY;
+    // Calculate direction from player to center
+    const dirX = centerX - playerX;
+    const dirY = centerY - playerY;
+    
+    // Normalize direction
+    const distance = Math.sqrt(dirX * dirX + dirY * dirY);
+    const normalizedX = dirX / distance;
+    const normalizedY = dirY / distance;
+    
+    // Place bet 80px in front of player towards center
+    const betDistance = 80;
+    const endX = playerX + normalizedX * betDistance;
+    const endY = playerY + normalizedY * betDistance;
     
     // Set initial position
     betChip.style.left = `${startX}px`;
