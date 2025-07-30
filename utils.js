@@ -1,4 +1,4 @@
-import { displayBet } from "./table/table.js"
+import { displayBet, updatePlayerStack } from "./table/table.js"
 
 
 class TableCoors {
@@ -17,6 +17,7 @@ class Player {
         this.hand = ""
         this.stack = 0
         this.currentBet = 0
+        this.isFold = false
     }
 }
 
@@ -37,7 +38,13 @@ class Game {
         this.isPostflopInclude = false
         this.totalMoneyInTheMiddle = 0
         this.lastBet = 0
+
+        this.lastBetIndex = this.getBigBlindIndex()
+        this.currentPlayerIndex = this.getEpIndex()
+        console.log("initial: ", this.lastBetIndex, this.currentPlayerIndex)
     }
+
+    
 
     adjustTableCoors() {
         let playerIndex = this.players.findIndex(el => el.isRealPlayer)
@@ -46,23 +53,51 @@ class Game {
         console.log(this.players)
     }
 
+    fold(player) {
+        player.isFold = true
+    }
+
     bet(player, amount) {
-        player.stack -= amount;
-        this.totalMoneyInTheMiddle += amount;
+        const dif = amount - player.currentBet
+        player.stack -= dif;
+        this.totalMoneyInTheMiddle += dif;
         this.lastBet = amount;
-        player.currentBet += amount;
+        player.currentBet = amount;
         displayBet(player, player.currentBet, this)
+        updatePlayerStack(player);
         return true;
+    }
+
+    setIndexNextPlayer() {
+        for (let i = 1; i < this.players.length; i++) {
+            const j = (i + this.currentPlayerIndex) % this.players.length
+            if (this.players[j].isFold) continue
+            this.currentPlayerIndex = j
+            return
+        }
+        throw Error("impossible player index")
+    }
+
+    getSmallBlindIndex() {
+        return this.players.findIndex(el => el.position == "SB")
+    }
+
+    getBigBlindIndex() {
+        return this.players.findIndex(el => el.position == "BB")
     }
     
     betSmallBlind() {
-        const sb = this.players.find(el => el.position == "SB")
+        const sb = this.players[this.getSmallBlindIndex()]
         this.bet(sb, 1)
     }
-
+    
     betBigBlind() {
-        const bb = this.players.find(el => el.position == "BB")
+        const bb = this.players[this.getBigBlindIndex()]
         this.bet(bb, 2)
+    }
+
+    getEpIndex() {
+        return this.players.findIndex(el => el.position == "EP")
     }
 }
 

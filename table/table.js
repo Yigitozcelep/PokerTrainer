@@ -166,6 +166,16 @@ const showActionButtons = (actions) => {
 }
 
 
+const updatePlayerStack = (player) => {
+    const playerSeat = document.querySelector(`[data-position="${player.position}"]`);
+    if (!playerSeat) return;
+    
+    const stackDisplay = playerSeat.querySelector('.player-stack');
+    if (stackDisplay) {
+        stackDisplay.textContent = `$${player.stack}`;
+    }
+}
+
 const displayBet = (player, amount, game) => {
     // Get player seat element by data-position attribute
     const playerSeat = document.querySelector(`[data-position="${player.position}"]`);
@@ -267,4 +277,4 @@ const getBetOptionResult = async (game) => {
 }
 
 
-export { displayTable, displayPlayers, showCommunityCards, showActionButtons, displayBet, getBetOptionResult };
+export { displayTable, displayPlayers, showCommunityCards, showActionButtons, displayBet, getBetOptionResult, updatePlayerStack };
