@@ -3,7 +3,8 @@ import { Game } from "./utils.js";
 
 /** * @param {Game} game */
 const saveTree = async (game) => {
-    const savedStates = [JSON.stringify(game)]
+    const savedPlayers = JSON.stringify(game.players)
+    const savedStates = []
 
     game.betSmallBlind()
     game.betBigBlind()
@@ -19,18 +20,32 @@ const saveTree = async (game) => {
             game.fold(currentPlayer)
             updateFoldedPlayer(currentPlayer)
         }
-        if (betOption == "call") {
+        else if (betOption == "call") {
             game.bet(currentPlayer, game.lastBet)
         }
-        if (betOption[1] == "x") {
+        else if (betOption == "all in") {
+            game.lastBetIndex = game.currentPlayerIndex
+            const allInAmount = currentPlayer.stack + currentPlayer.currentBet
+            game.bet(currentPlayer, allInAmount)
+        }
+        else if (betOption[1] == "x") {
             game.lastBetIndex = game.currentPlayerIndex
             game.bet(currentPlayer, (betOption[0] - "0") * game.lastBet)
         }
         
         game.setIndexNextPlayer()
+        savedStates.push(betOption)
         updateActivePlayer(game)
     }
-};  
+
+    downloadGame(savedPlayers, savedStates)
+}; 
+
+
+
+const downloadGame = (savedPlayers, savedStates) => {
+    // downlaod the data in .json file
+}
 
 
 export { saveTree };

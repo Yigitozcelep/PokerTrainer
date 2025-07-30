@@ -103,8 +103,28 @@ class Game {
 
 
 const getAvaliableBetOptions = (game) => {
-    // it returns bet list of bet options with the given circumstances
-    return ["fold", "call", "2x", "3x", "4x"]
+    const currentPlayer = game.players[game.currentPlayerIndex];
+    const options = ["fold", "call"];
+    const amountToCall = game.lastBet - currentPlayer.currentBet;
+    const raiseBase = game.lastBet;
+
+    if (currentPlayer.stack >= amountToCall + (2 * raiseBase)) {
+        options.push("2x");
+    }
+    
+    if (currentPlayer.stack >= amountToCall + (3 * raiseBase)) {
+        options.push("3x");
+    }
+    
+    if (currentPlayer.stack >= amountToCall + (4 * raiseBase)) {
+        options.push("4x");
+    }
+    
+    if (currentPlayer.stack > amountToCall && currentPlayer.stack > 0) {
+        options.push("all in");
+    }
+    
+    return options;
 }
 
 export { Player, Game, getAvaliableBetOptions};
