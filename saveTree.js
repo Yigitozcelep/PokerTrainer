@@ -50,15 +50,15 @@ const saveTree = async (game) => {
         
         clearBetAnimations()
         if (i == 0) {
-            if (game.flop) displayCardsAtCenter([game.flop[0], game.flop[1], game.flop[2]])
+            if (game.flop.length > 0) displayCardsAtCenter([game.flop[0], game.flop[1], game.flop[2]])
             else break
         }
         if (i == 1) {
-            if (game.turn) displayCardsAtCenter([game.flop[0], game.flop[1], game.flop[2], game.turn[0]])
+            if (game.turn.length > 0) displayCardsAtCenter([game.flop[0], game.flop[1], game.flop[2], game.turn[0]])
             else break
         }
         if (i == 2) {
-            if (game.river) displayCardsAtCenter([game.flop[0], game.flop[1], game.flop[2], game.turn[0], game.river[0]])
+            if (game.river.length > 0) displayCardsAtCenter([game.flop[0], game.flop[1], game.flop[2], game.turn[0], game.river[0]])
             else break
         }
         game.lastBetIndex = -1
