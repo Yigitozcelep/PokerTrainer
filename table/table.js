@@ -380,18 +380,43 @@ const getBetOptionResult = async (game) => {
         const betOptionsContainer = document.createElement('div');
         betOptionsContainer.className = 'bet-options-container';
         
-        betOptions.forEach(option => {
+        const keyboardShortcuts = ['1', '2', '3', 'q', 'w', 'e', 'a', 's', 'd'];
+        const keyMap = {};
+        
+        betOptions.forEach((option, index) => {
             const button = document.createElement('button');
             button.className = `bet-option-button ${option.toLowerCase().replace('x', 'bet')}`;
-            button.textContent = option.toUpperCase();
+            
+            const shortcut = keyboardShortcuts[index];
+            keyMap[shortcut] = option;
+            
+            const buttonContent = document.createElement('div');
+            buttonContent.innerHTML = `${option.toUpperCase()}<br><span style="font-size: 0.8em; opacity: 0.7">[${shortcut.toUpperCase()}]</span>`;
+            button.appendChild(buttonContent);
             
             button.addEventListener('click', () => {
                 betOptionsContainer.remove();
+                document.removeEventListener('keydown', handleKeyPress);
                 resolve(option);
             });
-            
             betOptionsContainer.appendChild(button);
         });
+        
+        const handleKeyPress = (e) => {
+            console.log("geliyor")
+            console.log("e: ", e)
+            const key = e.key.toLowerCase();
+            if (keyMap[key]) {
+                console.log("key: ", key)
+                let i = keyboardShortcuts.indexOf(key)
+                if (i >= betOptions.length) return
+                betOptionsContainer.remove();
+                document.removeEventListener('keydown', handleKeyPress);
+                resolve(betOptions[i]);
+            }
+        };
+        
+        document.addEventListener('keydown', handleKeyPress);
         
         document.body.appendChild(betOptionsContainer);
     });
