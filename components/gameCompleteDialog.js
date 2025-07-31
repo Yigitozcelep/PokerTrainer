@@ -13,7 +13,7 @@ export const showGameCompleteDialog = (message) => {
         
         const instruction = document.createElement('p');
         instruction.className = 'game-complete-instruction';
-        instruction.textContent = 'Press Enter to continue';
+        instruction.textContent = 'Press Enter to continue or Q to quit training';
         
         modal.appendChild(messageElement);
         modal.appendChild(instruction);
@@ -42,7 +42,12 @@ export const showGameCompleteDialog = (message) => {
                 event.preventDefault(); // Prevent default behavior
                 event.stopPropagation(); // Stop event propagation
                 cleanup();
-                resolve();
+                resolve('continue');
+            } else if (event.key === 'q' || event.key === 'Q') {
+                event.preventDefault(); // Prevent default behavior
+                event.stopPropagation(); // Stop event propagation
+                cleanup();
+                resolve('quit');
             }
         };
         
@@ -51,7 +56,7 @@ export const showGameCompleteDialog = (message) => {
         
         overlay.addEventListener('click', () => {
             cleanup();
-            resolve();
+            resolve('continue');
         });
     });
 };

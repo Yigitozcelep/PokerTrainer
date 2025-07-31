@@ -152,9 +152,13 @@ const trainTreeButton = async () => {
         
         await trainGame(game, actions)
 
-        await showGameCompleteDialog(game.description)
-        
+        const dialogResult = await showGameCompleteDialog(game.description)
+        if (dialogResult === 'quit') {
+            break
+        }
     }
+    
+    displayMainPage()
 }
 
 
