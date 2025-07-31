@@ -51,7 +51,7 @@ const getStack = async (game) => {
         buttonContainer.appendChild(confirmButton);
         buttonContainer.appendChild(cancelButton);
         container.appendChild(buttonContainer);
-
+        input.value = 200
         input.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 confirmButton.click();
