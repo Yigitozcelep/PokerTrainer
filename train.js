@@ -50,7 +50,7 @@ const trainGame = async (game, actions) => {
             }
 
             if (!currentPlayer.isRealPlayer) {
-                await new Promise((resolve) => setTimeout(resolve, betOption != "fold" ? 800 : 200))
+                await new Promise((resolve) => setTimeout(resolve, betOption != "fold" ? 800 : 100))
             }
             game.setIndexNextPlayer()
             updateActivePlayer(game)
