@@ -22,7 +22,6 @@ const trainGame = async (game, actions) => {
             }
             else betOption = actions[actionIndex]
             actionIndex++
-            console.log("bet option: ", betOption)
             if (betOption == "fold") {
                 game.fold(currentPlayer)
                 updateFoldedPlayer(currentPlayer)

@@ -40,7 +40,6 @@ class Game {
         this.description = ""
         this.lastBetIndex = this.getBigBlindIndex()
         this.currentPlayerIndex = this.getEpIndex()
-        console.log("initial: ", this.lastBetIndex, this.currentPlayerIndex)
 
         this.flop = []
         this.turn = []
@@ -76,7 +75,6 @@ class Game {
         let playerIndex = this.players.findIndex(el => el.isRealPlayer)
         const length = this.players.length
         for (let i = 0; i < length; i++) this.players[(playerIndex + i) % length].tableCoors = positionDatas[i]
-        console.log(this.players)
     }
 
     fold(player) {

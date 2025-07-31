@@ -105,8 +105,6 @@ const getFiles = async () => {
                     }
                 }
                 
-                console.log(`Found ${jsonFiles.length} JSON files`);
-                console.log(jsonFiles)
                 resolve(jsonFiles);
             });
             
@@ -131,8 +129,6 @@ const trainTreeButton = async () => {
         const randomIndex = Math.floor(Math.random() * files.length)
         const data = files[randomIndex].data
         const game = new Game()
-        console.log("Playing file:", files[randomIndex].name)
-        console.log("data: ", data)
         game.players = data.players.map(el => new Player(el.position, el.tableCoors))
         game.players.forEach((el, i) => {
             el.currentBet = data.players[i].currentBet

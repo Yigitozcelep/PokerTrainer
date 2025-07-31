@@ -138,15 +138,7 @@ const createCardElement = (cardString, className = 'card') => {
     return cardElement;
 }
 
-const showCommunityCards = (cards) => {
-    const communityCardsContainer = document.getElementById('community-cards');
-    communityCardsContainer.innerHTML = '';
-    
-    cards.forEach(card => {
-        const cardElement = createCardElement(card);
-        communityCardsContainer.appendChild(cardElement);
-    });
-}
+
 
 const displayCardsAtCenter = (cards) => {
     let communityCardsContainer = document.getElementById('community-cards');
@@ -199,31 +191,6 @@ const displayCardsAtCenter = (cards) => {
         communityCardsContainer.appendChild(cardElement);
     });
 }
-
-const showActionButtons = (actions) => {
-    // Remove existing action buttons
-    const existingButtons = document.querySelector('.action-buttons');
-    if (existingButtons) {
-        existingButtons.remove();
-    }
-    
-    const actionButtonsContainer = document.createElement('div');
-    actionButtonsContainer.className = 'action-buttons';
-    
-    actions.forEach(action => {
-        const button = document.createElement('button');
-        button.className = `action-button ${action.toLowerCase()}`;
-        button.textContent = action;
-        button.addEventListener('click', () => {
-            console.log(`Player action: ${action}`);
-            // Handle action here
-        });
-        actionButtonsContainer.appendChild(button);
-    });
-    
-    document.querySelector('.table-container').appendChild(actionButtonsContainer);
-}
-
 
 const updatePlayerStack = (player) => {
     const playerSeat = document.querySelector(`[data-position="${player.position}"]`);
@@ -403,11 +370,8 @@ const getBetOptionResult = async (game) => {
         });
         
         const handleKeyPress = (e) => {
-            console.log("geliyor")
-            console.log("e: ", e)
             const key = e.key.toLowerCase();
             if (keyMap[key]) {
-                console.log("key: ", key)
                 let i = keyboardShortcuts.indexOf(key)
                 if (i >= betOptions.length) return
                 betOptionsContainer.remove();
@@ -423,4 +387,4 @@ const getBetOptionResult = async (game) => {
 }
 
 
-export { displayTable, displayPlayers, showCommunityCards, showActionButtons, displayBet, getBetOptionResult, updatePlayerStack, updateActivePlayer, updateFoldedPlayer, displayCardsAtCenter, clearBetAnimations, showWrongBetIndication };
+export { displayTable, displayPlayers, displayBet, getBetOptionResult, updatePlayerStack, updateActivePlayer, updateFoldedPlayer, displayCardsAtCenter, clearBetAnimations, showWrongBetIndication };
