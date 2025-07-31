@@ -1,4 +1,4 @@
-import { displayCardsAtCenter, getBetOptionResult, updateActivePlayer, updateFoldedPlayer, clearBetAnimations } from "./table/table.js";
+import { displayCardsAtCenter, getBetOptionResult, updateActivePlayer, updateFoldedPlayer, clearBetAnimations, showWrongBetIndication } from "./table/table.js";
 import { Game } from "./utils.js";
 
 /** * @param {Game} game @param {string[]} actions */
@@ -16,7 +16,7 @@ const trainGame = async (game, actions) => {
             if (currentPlayer.isRealPlayer) {
                 betOption = await getBetOptionResult(game)
                 while (betOption != actions[actionIndex]){
-                    alert("Wrong Bet Option")
+                    showWrongBetIndication()
                     betOption = await getBetOptionResult(game)
                 }
             }

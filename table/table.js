@@ -331,6 +331,33 @@ const displayBet = (player, amount, game) => {
 }
 
 
+const showWrongBetIndication = () => {
+    const existingMessage = document.querySelector('.wrong-bet-message');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+    
+    const message = document.createElement('div');
+    message.className = 'wrong-bet-message';
+    message.textContent = 'Wrong Bet Option!';
+    document.body.appendChild(message);
+    
+    setTimeout(() => {
+        message.remove();
+    }, 1500);
+    
+    const buttons = document.querySelectorAll('.bet-option-button');
+    buttons.forEach(button => {
+        button.classList.add('wrong-bet-shake');
+    });
+    
+    setTimeout(() => {
+        buttons.forEach(button => {
+            button.classList.remove('wrong-bet-shake');
+        });
+    }, 500);
+}
+
 const getBetOptionResult = async (game) => {
     const betOptions = getAvaliableBetOptions(game);
     
@@ -361,4 +388,4 @@ const getBetOptionResult = async (game) => {
 }
 
 
-export { displayTable, displayPlayers, showCommunityCards, showActionButtons, displayBet, getBetOptionResult, updatePlayerStack, updateActivePlayer, updateFoldedPlayer, displayCardsAtCenter, clearBetAnimations };
+export { displayTable, displayPlayers, showCommunityCards, showActionButtons, displayBet, getBetOptionResult, updatePlayerStack, updateActivePlayer, updateFoldedPlayer, displayCardsAtCenter, clearBetAnimations, showWrongBetIndication };
