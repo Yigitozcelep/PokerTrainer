@@ -10,6 +10,7 @@ import {displayBet, displayCardsAtCenter, displayPlayers, displayTable, getBetOp
 import getFlopTurnRiver from "../questions/getFlopTurnRiver.js";
 import { trainGame } from "../train.js";
 import { customConfirm } from "../components/customConfirm.js";
+import { showGameCompleteDialog } from "../components/gameCompleteDialog.js";
 
 const displayMainPage = () => {
     const body = document.body;
@@ -143,10 +144,7 @@ const trainTreeButton = async () => {
         
         await trainGame(game, actions)
         
-        const continueTraining = await customConfirm("Continue training with another random file?")
-        if (!continueTraining) {
-            break
-        }
+        await showGameCompleteDialog(game.description)
     }
 }
 

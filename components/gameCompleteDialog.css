@@ -1,0 +1,36 @@
+.game-complete-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.game-complete-modal {
+    background-color: #2a2a2a;
+    border: 2px solid #4CAF50;
+    border-radius: 10px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    max-width: 400px;
+}
+
+.game-complete-message {
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.game-complete-instruction {
+    color: #cccccc;
+    font-size: 16px;
+    margin-top: 10px;
+    font-style: italic;
+}
