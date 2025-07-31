@@ -9,6 +9,7 @@ import { saveTree } from "../saveTree.js";
 import {displayBet, displayCardsAtCenter, displayPlayers, displayTable, getBetOptionResult } from "../table/table.js";
 import getFlopTurnRiver from "../questions/getFlopTurnRiver.js";
 import { trainGame } from "../train.js";
+import { customConfirm } from "../components/customConfirm.js";
 
 const displayMainPage = () => {
     const body = document.body;
@@ -142,7 +143,7 @@ const trainTreeButton = async () => {
         
         await trainGame(game, actions)
         
-        const continueTraining = confirm("Continue training with another random file?")
+        const continueTraining = await customConfirm("Continue training with another random file?")
         if (!continueTraining) {
             break
         }
