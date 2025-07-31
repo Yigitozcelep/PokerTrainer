@@ -49,7 +49,9 @@ const trainGame = async (game, actions) => {
                 game.bet(currentPlayer, (betOption[0] - "0") * game.lastBet)
             }
 
-            if (!currentPlayer.isRealPlayer) await new Promise((resolve) => setTimeout(resolve, 800))
+            if (!currentPlayer.isRealPlayer) {
+                await new Promise((resolve) => setTimeout(resolve, betOption != "fold" ? 800 : 200))
+            }
             game.setIndexNextPlayer()
             updateActivePlayer(game)
         }

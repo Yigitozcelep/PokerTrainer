@@ -118,9 +118,9 @@ const getFlopTurnRiver = async (game, usedCards = []) => {
     
     const river = turn ? await selectOptionalCard('Select River', allUsedCards) : null;
     
-    game.flop = flop || null
-    game.turn = turn || null
-    game.river = river || null
+    game.flop = flop || []
+    game.turn = turn || []
+    game.river = river || []
 } 
 
 export default getFlopTurnRiver;
