@@ -120,6 +120,13 @@ const createCardElement = (cardString, className = 'card') => {
     const cardElement = document.createElement('div');
     cardElement.className = className;
     
+    // Handle undefined or null card strings
+    if (!cardString) {
+        console.warn('Card string is undefined or null');
+        cardElement.textContent = '';
+        return cardElement;
+    }
+    
     // Determine if card is red or black based on suit
     if (cardString.includes('♥') || cardString.includes('♦')) {
         cardElement.classList.add('red');
@@ -182,7 +189,10 @@ const displayCardsAtCenter = (cards) => {
         return;
     }
     
-    cards.forEach((card, index) => {
+    // Filter out any undefined or null cards
+    const validCards = cards.filter(card => card != null);
+    
+    validCards.forEach((card, index) => {
         const cardElement = createCardElement(card);
         cardElement.style.animationDelay = `${index * 0.1}s`;
         cardElement.classList.add('card-deal-animation');
