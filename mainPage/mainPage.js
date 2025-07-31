@@ -4,7 +4,7 @@ import getPros from "../questions/getPros.js";
 import getStack from "../questions/getStack.js";
 import getTreeType from "../questions/getTreeType.js";
 import getDescription from "../questions/getDescription.js";
-import { Game } from "../utils.js";
+import { Game, Player } from "../utils.js";
 import { saveTree } from "../saveTree.js";
 import {displayBet, displayCardsAtCenter, displayPlayers, displayTable, getBetOptionResult } from "../table/table.js";
 import getFlopTurnRiver from "../questions/getFlopTurnRiver.js";
@@ -133,7 +133,15 @@ const trainTreeButton = async () => {
         const game = new Game()
         console.log("Playing file:", files[randomIndex].name)
         console.log("data: ", data)
-        game.players = data.players
+        game.players = data.players.map(el => new Player(el.position, el.tableCoors))
+        game.players.forEach((el, i) => {
+            el.currentBet = data.players[i].currentBet
+            el.hand = data.players[i].hand
+            el.isFold = data.players[i].isFold
+            el.isPro = data.players[i].isPro
+            el.isRealPlayer = data.players[i].isRealPlayer
+            el.stack = data.players[i].stack
+        })
         game.description = data.description
         game.flop = data.flop
         game.turn = data.turn
@@ -143,8 +151,9 @@ const trainTreeButton = async () => {
         const table = displayTable(game)
         
         await trainGame(game, actions)
-        
+
         await showGameCompleteDialog(game.description)
+        
     }
 }
 
