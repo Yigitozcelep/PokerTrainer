@@ -18,7 +18,7 @@ const showPositions = async (game, onSelect, textContext, multiSelect = false, i
 
         game.players.forEach((player, index) => {
             if (!player) return;
-            
+            if (player.tag.length > 0) return
             if (!multiSelect || !player.isRealPlayer) {
                 const button = document.createElement('button');
                 button.textContent = player.position;
