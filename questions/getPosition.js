@@ -7,7 +7,7 @@ const getPosition = async (game) => {
         if (player) {
             player.isRealPlayer = true;
         }
-    });
+    }, "Select Your Position");
     
     return selectedPosition;
 }

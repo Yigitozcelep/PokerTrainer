@@ -13,7 +13,7 @@ class Player {
         this.tableCoors = tableCoors
         this.isRealPlayer = false
         this.position = position
-        this.isPro = false
+        this.tag = ""
         this.hand = ""
         this.stack = 0
         this.currentBet = 0

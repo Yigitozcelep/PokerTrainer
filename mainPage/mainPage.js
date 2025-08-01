@@ -1,6 +1,6 @@
 import getHands from "../questions/getHands.js";
 import getPosition from "../questions/getPosition.js";
-import getPros from "../questions/getPros.js";
+import getPros from "../questions/getTags.js";
 import getStack from "../questions/getStack.js";
 import getTreeType from "../questions/getTreeType.js";
 import getDescription from "../questions/getDescription.js";
@@ -11,6 +11,7 @@ import getFlopTurnRiver from "../questions/getFlopTurnRiver.js";
 import { trainGame } from "../train.js";
 import { customConfirm } from "../components/customConfirm.js";
 import { showGameCompleteDialog } from "../components/gameCompleteDialog.js";
+import getTags from "../questions/getTags.js";
 
 const displayMainPage = () => {
     const body = document.body;
@@ -57,7 +58,9 @@ const saveTreeButton = async() => {
         
         await getStack(game);
         await getPosition(game);
-        await getPros(game);
+        await getTags(game, "Pros");
+        await getTags(game, "Aggros");
+        await getTags(game, "Passives");
         const userHand = await getHands(game);
         await getFlopTurnRiver(game, userHand);
         await getDescription(game);
@@ -134,7 +137,7 @@ const trainTreeButton = async () => {
             el.currentBet = data.players[i].currentBet
             el.hand = data.players[i].hand
             el.isFold = data.players[i].isFold
-            el.isPro = data.players[i].isPro
+            el.tag = data.players[i].tag
             el.isRealPlayer = data.players[i].isRealPlayer
             el.stack = data.players[i].stack
         })

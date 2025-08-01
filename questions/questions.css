@@ -139,6 +139,10 @@
     transition: all 0.3s;
 }
 
+.none-button + .confirm-button {
+    margin-top: 15px;
+}
+
 .confirm-button:hover {
     background: #2ecc71;
 }
@@ -183,6 +187,24 @@
 
 .cancel-button:hover {
     background: #7f8c8d;
+}
+
+/* None Button */
+.none-button {
+    padding: 10px 20px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: block;
+    margin: 25px auto 0;
+    transition: all 0.3s;
+}
+
+.none-button:hover {
+    background: #c0392b;
 }
 
 /* Description Modal */

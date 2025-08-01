@@ -1,12 +1,12 @@
 
-
-const showPositions = async (game, onSelect, multiSelect = false) => {
+/** * @returns {Promise<boolean>} */
+const showPositions = async (game, onSelect, textContext, multiSelect = false, isShowNoneButton = false) => {
     return new Promise((resolve) => {
         const container = document.createElement('div');
         container.className = 'question-modal';
 
         const title = document.createElement('h2');
-        title.textContent = multiSelect ? 'Select Pro Players' : 'Select Your Position';
+        title.textContent = textContext
         title.className = 'question-title';
         container.appendChild(title);
 
@@ -54,6 +54,35 @@ const showPositions = async (game, onSelect, multiSelect = false) => {
         });
 
         container.appendChild(positionsGrid);
+
+        if (isShowNoneButton) {
+            const noneButton = document.createElement('button');
+            noneButton.textContent = 'None';
+            noneButton.className = 'none-button';
+                
+            noneButton.addEventListener("keydown", (e) => {
+                console.log("keydown on none button:", e.key)
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    document.body.removeChild(container);
+                    document.body.removeChild(overlay);
+                    resolve(false)
+                }
+            })
+            
+            noneButton.addEventListener('click', () => {
+                document.body.removeChild(container);
+                document.body.removeChild(overlay);
+                resolve(false);
+            });
+
+            container.appendChild(noneButton);
+            
+            // Focus the none button after a brief delay to ensure DOM is ready
+            setTimeout(() => {
+                noneButton.focus();
+            }, 100);
+        }
 
         if (multiSelect) {
             const confirmButton = document.createElement('button');

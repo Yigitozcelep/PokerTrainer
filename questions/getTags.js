@@ -1,16 +1,16 @@
 import showPositions from './showPositions.js';
-const getPros = async (game) => {
+const getTags = async (game, tag) => {
     
     const selectedPositions = await showPositions(game, (positions) => {
         positions.forEach(position => {
             const player = game.players.find(p => p.position === position);
             if (player) {
-                player.isPro = true;
+                player.tag = tag;
             }
         });
-    }, true);
+    }, tag, true, true);
     
     return selectedPositions;
 }
 
-export default getPros;
+export default getTags;

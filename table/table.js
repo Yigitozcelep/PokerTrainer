@@ -76,10 +76,10 @@ const displayPlayers = (game, tableElement) => {
         playerSeat.appendChild(positionLabel);
         
         // Player type (Pro label if applicable)
-        if (player.isPro) {
+        if (player.tag.length > 0) {
             const proLabel = document.createElement('div');
             proLabel.className = 'player-type';
-            proLabel.textContent = 'PRO';
+            proLabel.textContent = player.tag;
             playerSeat.appendChild(proLabel);
         }
         
