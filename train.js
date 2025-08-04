@@ -2,11 +2,17 @@ import { displayCardsAtCenter, getBetOptionResult, updateActivePlayer, updateFol
 import { Game } from "./utils.js";
 
 /** * @param {Game} game @param {string[]} actions */
-const trainGame = async (game, actions) => {
+const trainGame = async (game, actions, wrongMoves) => {
     game.betSmallBlind()
     game.betBigBlind()
     updateActivePlayer(game)
     let actionIndex = 0
+    
+    // Create wrong move counter display
+    const counterDisplay = document.createElement('div');
+    counterDisplay.className = 'wrong-move-counter';
+    counterDisplay.textContent = `Wrong Moves: ${wrongMoves.data}`;
+    document.body.appendChild(counterDisplay);
 
     for (let i = 0; i < 4; i++) {
         let counter = 0
@@ -16,6 +22,8 @@ const trainGame = async (game, actions) => {
             if (currentPlayer.isRealPlayer) {
                 betOption = await getBetOptionResult(game)
                 while (betOption != actions[actionIndex]){
+                    wrongMoves.data++;
+                    counterDisplay.textContent = `Wrong Moves: ${wrongMoves.data}`;
                     showWrongBetIndication()
                     betOption = await getBetOptionResult(game)
                 }

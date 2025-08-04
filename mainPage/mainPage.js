@@ -120,6 +120,12 @@ const getFiles = async () => {
     }
 }
 
+class WrongMove {
+    constructor() {
+        this.data = 0
+    }
+}
+
 
 const trainTreeButton = async () => {
     const files = await getFiles()
@@ -128,6 +134,8 @@ const trainTreeButton = async () => {
         return
     }
     
+
+    const wrongMoves = new WrongMove()
     while (true) {
         const randomIndex = Math.floor(Math.random() * files.length)
         const data = files[randomIndex].data
@@ -149,7 +157,8 @@ const trainTreeButton = async () => {
         game.adjustTableCoors()
         const table = displayTable(game)
         
-        await trainGame(game, actions)
+
+        await trainGame(game, actions, wrongMoves)
 
         const dialogResult = await showGameCompleteDialog(game.description)
         if (dialogResult === 'quit') {
