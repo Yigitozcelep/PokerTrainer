@@ -160,6 +160,9 @@ const getAvaliableBetOptions = (game) => {
         if (currentPlayer.stack >= pot * 1.0) {
             options.push("100%");
         }
+        if (currentPlayer.stack >= pot * 1.5) {
+            options.push("150%");
+        }
         if (currentPlayer.stack >= pot * 2.0) {
             options.push("200%");
         }
