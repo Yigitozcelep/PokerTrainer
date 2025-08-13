@@ -2,17 +2,23 @@ import { displayCardsAtCenter, getBetOptionResult, updateActivePlayer, updateFol
 import { Game } from "./utils.js";
 
 /** * @param {Game} game @param {string[]} actions */
-const trainGame = async (game, actions, wrongMoves) => {
+const trainGame = async (game, actions, wrongMoves, totalMoves) => {
     game.betSmallBlind()
     game.betBigBlind()
     updateActivePlayer(game)
     let actionIndex = 0
     
     // Create wrong move counter display
-    const counterDisplay = document.createElement('div');
-    counterDisplay.className = 'wrong-move-counter';
-    counterDisplay.textContent = `Wrong Moves: ${wrongMoves.data}`;
-    document.body.appendChild(counterDisplay);
+    const wrongCounterDisplay = document.createElement('div');
+    wrongCounterDisplay.className = 'wrong-move-counter';
+    wrongCounterDisplay.textContent = `Wrong Moves: ${wrongMoves.data}`;
+    document.body.appendChild(wrongCounterDisplay);
+
+    // Create total move counter display
+    const totalCounterDisplay = document.createElement('div');
+    totalCounterDisplay.className = 'total-move-counter';
+    totalCounterDisplay.textContent = `Total Moves: ${totalMoves.data}`;
+    document.body.appendChild(totalCounterDisplay);
 
     for (let i = 0; i < 4; i++) {
         let counter = 0
@@ -21,11 +27,15 @@ const trainGame = async (game, actions, wrongMoves) => {
             let betOption = ""
             if (currentPlayer.isRealPlayer) {
                 betOption = await getBetOptionResult(game)
+                totalMoves.data++;
+                totalCounterDisplay.textContent = `Total Moves: ${totalMoves.data}`;
                 while (betOption != actions[actionIndex]){
                     wrongMoves.data++;
-                    counterDisplay.textContent = `Wrong Moves: ${wrongMoves.data}`;
+                    wrongCounterDisplay.textContent = `Wrong Moves: ${wrongMoves.data}`;
                     showWrongBetIndication()
                     betOption = await getBetOptionResult(game)
+                    totalMoves.data++;
+                    totalCounterDisplay.textContent = `Total Moves: ${totalMoves.data}`;
                 }
             }
             else betOption = actions[actionIndex]

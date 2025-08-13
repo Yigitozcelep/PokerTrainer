@@ -1,5 +1,6 @@
-export const showGameCompleteDialog = (message) => {
+export const showGameCompleteDialog = (message, name, path) => {
     return new Promise((resolve) => {
+        console.log("name: ", name, "path: ", path)
         const overlay = document.createElement('div');
         overlay.className = 'game-complete-overlay';
         
@@ -10,12 +11,25 @@ export const showGameCompleteDialog = (message) => {
         const messageElement = document.createElement('p');
         messageElement.className = 'game-complete-message';
         messageElement.textContent = message || 'Game Complete!';
+        modal.appendChild(messageElement);
+        
+        if (name) {
+            const nameElement = document.createElement('p');
+            nameElement.className = 'game-complete-name';
+            nameElement.textContent = `Name: ${name}`;
+            modal.appendChild(nameElement);
+        }
+        
+        if (path) {
+            const pathElement = document.createElement('p');
+            pathElement.className = 'game-complete-path';
+            pathElement.textContent = `Path: ${path}`;
+            modal.appendChild(pathElement);
+        }
         
         const instruction = document.createElement('p');
         instruction.className = 'game-complete-instruction';
         instruction.textContent = 'Press Enter to continue or Q to quit training';
-        
-        modal.appendChild(messageElement);
         modal.appendChild(instruction);
         
         overlay.appendChild(modal);

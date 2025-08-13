@@ -103,7 +103,7 @@ const getFiles = async () => {
                                 data: data
                             });
                         } catch (error) {
-                            console.error(`Error reading file ${file.name}:`, error);
+                            console.error(`Error reading file ${file.name} path: ${file.webkitRelativePath}`, error);
                         }
                     }
                 }
@@ -126,6 +126,12 @@ class WrongMove {
     }
 }
 
+class TotalMove {
+    constructor() {
+        this.data = 0
+    }
+}
+
 
 const trainTreeButton = async () => {
     const files = await getFiles()
@@ -136,9 +142,11 @@ const trainTreeButton = async () => {
     
 
     const wrongMoves = new WrongMove()
+    const totalMoves = new TotalMove()
     while (true) {
         const randomIndex = Math.floor(Math.random() * files.length)
-        const data = files[randomIndex].data
+        const file = files[randomIndex]
+        const data = file.data
         const game = new Game()
         game.players = data.players.map(el => new Player(el.position, el.tableCoors))
         game.players.forEach((el, i) => {
@@ -158,9 +166,9 @@ const trainTreeButton = async () => {
         const table = displayTable(game)
         
 
-        await trainGame(game, actions, wrongMoves)
+        await trainGame(game, actions, wrongMoves, totalMoves)
 
-        const dialogResult = await showGameCompleteDialog(game.description)
+        const dialogResult = await showGameCompleteDialog(game.description, file.name, file.path)
         if (dialogResult === 'quit') {
             break
         }
