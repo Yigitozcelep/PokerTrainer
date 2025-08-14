@@ -352,7 +352,24 @@ const getBetOptionResult = async (game) => {
         
         betOptions.forEach((option, index) => {
             const button = document.createElement('button');
-            button.className = `bet-option-button ${option.toLowerCase().replace('x', 'bet')}`;
+            // Handle different option types for CSS classes
+            let className = 'bet-option-button';
+            if (option === 'fold') {
+                className += ' fold';
+            } else if (option === 'check') {
+                className += ' check';
+            } else if (option === 'call') {
+                className += ' call';
+            } else if (option === 'all in') {
+                className += ' all';
+            } else if (option.includes('%')) {
+                // For percentage options, add the percentage value as part of the class
+                className += ` ${option}`;
+            } else if (option.includes('x')) {
+                // For multiplier options like 2x, 3x, 4x
+                className += ` ${option.toLowerCase().replace('x', 'bet')}`;
+            }
+            button.className = className;
             
             const shortcut = keyboardShortcuts[index];
             keyMap[shortcut] = option;

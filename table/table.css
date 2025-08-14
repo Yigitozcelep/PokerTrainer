@@ -370,6 +370,16 @@
     background: linear-gradient(135deg, #c0392b, #a93226);
 }
 
+/* Check button - Blue */
+.bet-option-button.check {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+}
+
+.bet-option-button.check:hover {
+    background: linear-gradient(135deg, #2980b9, #21618c);
+}
+
 /* Call button */
 .bet-option-button.call {
     background: linear-gradient(135deg, #3498db, #2980b9);
@@ -378,6 +388,50 @@
 
 .bet-option-button.call:hover {
     background: linear-gradient(135deg, #2980b9, #21618c);
+}
+
+/* Small percentage bets (30%, 50%) - Light Green */
+.bet-option-button[class*="30%"],
+.bet-option-button[class*="50%"] {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white;
+}
+
+.bet-option-button[class*="30%"]:hover,
+.bet-option-button[class*="50%"]:hover {
+    background: linear-gradient(135deg, #27ae60, #229954);
+}
+
+/* Medium percentage bet (100%) - Orange */
+.bet-option-button[class*="100%"] {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    color: white;
+}
+
+.bet-option-button[class*="100%"]:hover {
+    background: linear-gradient(135deg, #e67e22, #d35400);
+}
+
+/* Large percentage bets (150%, 200%) - Purple */
+.bet-option-button[class*="150%"],
+.bet-option-button[class*="200%"] {
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+    color: white;
+}
+
+.bet-option-button[class*="150%"]:hover,
+.bet-option-button[class*="200%"]:hover {
+    background: linear-gradient(135deg, #8e44ad, #7d3c98);
+}
+
+/* Huge percentage bet (400%) - Red */
+.bet-option-button[class*="400%"] {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+}
+
+.bet-option-button[class*="400%"]:hover {
+    background: linear-gradient(135deg, #c0392b, #a93226);
 }
 
 /* Bet multiplier buttons */
