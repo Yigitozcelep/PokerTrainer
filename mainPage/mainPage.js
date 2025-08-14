@@ -54,7 +54,7 @@ const saveTreeButton = async() => {
     }
     
     try {
-        const game = new Game();
+        let game = new Game();
         
         await getStack(game);
         await getPosition(game);
@@ -67,7 +67,16 @@ const saveTreeButton = async() => {
         await getDescription(game);
         game.adjustTableCoors()
         const table = displayTable(game)
-        await saveTree(game);
+
+        const datas = []
+        for (let i = 0; i < 1000; i++) datas.push(game.copyGame())
+        game = datas.pop()
+        while ((await saveTree(game)) === "undo") {
+            game = datas.pop()
+            mainContainer.style.display = '';
+            displayTable(game)
+    }
+        
     } catch (error) {
         console.error('Error during tree setup:', error);
         alert('Error saving tree. Please try again.');
@@ -165,7 +174,6 @@ const trainTreeButton = async () => {
         const actions = data.states
         game.adjustTableCoors()
         const table = displayTable(game)
-        
 
         await trainGame(game, actions, wrongMoves, totalMoves)
 

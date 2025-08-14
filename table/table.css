@@ -459,6 +459,17 @@
     background: linear-gradient(135deg, #c0392b, #a93226);
 }
 
+/* Undo button */
+.bet-option-button.undo {
+    background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+    color: white;
+    font-weight: bold;
+}
+
+.bet-option-button.undo:hover {
+    background: linear-gradient(135deg, #7f8c8d, #616a6b);
+}
+
 /* Wrong bet indication */
 .wrong-bet-shake {
     animation: shake 0.5s ease-in-out;

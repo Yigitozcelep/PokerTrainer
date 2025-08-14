@@ -335,8 +335,12 @@ const showWrongBetIndication = () => {
     }, 500);
 }
 
-const getBetOptionResult = async (game) => {
+const getBetOptionResult = async (game, includeUndo = false) => {
     const betOptions = getAvaliableBetOptions(game);
+    
+    if (includeUndo) {
+        betOptions.unshift("undo");
+    }
     
     return new Promise((resolve) => {
         const existingButtons = document.querySelector('.bet-options-container');
@@ -347,7 +351,7 @@ const getBetOptionResult = async (game) => {
         const betOptionsContainer = document.createElement('div');
         betOptionsContainer.className = 'bet-options-container';
         
-        const keyboardShortcuts = ['1', '2', '3', 'q', 'w', 'e', 'a', 's', 'd'];
+        const keyboardShortcuts = ["u", '1', '2', '3', 'q', 'w', 'e', 'a', 's', 'd', 'z'];
         const keyMap = {};
         
         betOptions.forEach((option, index) => {
@@ -362,6 +366,8 @@ const getBetOptionResult = async (game) => {
                 className += ' call';
             } else if (option === 'all in') {
                 className += ' all';
+            } else if (option === 'undo') {
+                className += ' undo';
             } else if (option.includes('%')) {
                 // For percentage options, add the percentage value as part of the class
                 className += ` ${option}`;

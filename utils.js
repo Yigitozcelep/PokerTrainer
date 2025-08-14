@@ -46,6 +46,31 @@ class Game {
         this.river = []
     }
 
+    copyGame(){
+        const game = new Game()
+        game.players = this.players.map(el => {
+            const player = new Player()
+            player.tableCoors = el.tableCoors
+            player.isRealPlayer = el.isRealPlayer
+            player.position = el.position
+            player.tag = el.tag
+            player.hand = el.hand
+            player.stack = el.stack
+            player.currentBet = el.currentBet
+            player.isFold = el.isFold
+            return player
+        })
+        game.totalMoneyInTheMiddle = this.totalMoneyInTheMiddle
+        game.lastBet = this.lastBet
+        game.description = this.description
+        game.lastBetIndex = this.lastBetIndex
+        game.currentPlayerIndex = this.currentPlayerIndex
+        game.flop = this.flop
+        game.turn = this.turn
+        game.flop = this.flop
+        return game
+    }
+
     getActivePlayerCount() {
         let counter = 0
         this.players.forEach(el => {
