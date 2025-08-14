@@ -61,6 +61,7 @@ const saveTreeButton = async() => {
         await getTags(game, "Pro");
         await getTags(game, "Aggro");
         await getTags(game, "Passive");
+        await getTags(game, "Fish");
         const userHand = await getHands(game);
         await getFlopTurnRiver(game, userHand);
         await getDescription(game);

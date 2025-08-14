@@ -5,7 +5,7 @@ import { Game } from "./utils.js";
 const saveTree = async (game) => {
     const savedPlayers = JSON.stringify(game.players)
     const savedStates = []
-
+    
     game.betSmallBlind()
     game.betBigBlind()
     
