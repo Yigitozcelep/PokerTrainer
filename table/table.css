@@ -448,6 +448,25 @@
     background: linear-gradient(135deg, #229954, #1e8449);
 }
 
+/* Higher bet multiplier buttons (8x, 16x) */
+.bet-option-button.bet8x {
+    background: linear-gradient(135deg, #e67e22, #d35400);
+    color: white;
+}
+
+.bet-option-button.bet8x:hover {
+    background: linear-gradient(135deg, #d35400, #ba4a00);
+}
+
+.bet-option-button.bet16x {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+}
+
+.bet-option-button.bet16x:hover {
+    background: linear-gradient(135deg, #c0392b, #a93226);
+}
+
 /* All in button */
 .bet-option-button.all {
     background: linear-gradient(135deg, #e74c3c, #c0392b);

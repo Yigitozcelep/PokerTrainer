@@ -217,6 +217,14 @@ const getAvaliableBetOptions = (game) => {
         options.push("4x");
     }
     
+    if (currentPlayer.stack >= amountToCall + (8 * raiseBase)) {
+        options.push("8x");
+    }
+    
+    if (currentPlayer.stack >= amountToCall + (16 * raiseBase)) {
+        options.push("16x");
+    }
+    
     if (currentPlayer.stack > amountToCall && currentPlayer.stack > 0) {
         options.push("all in");
     }

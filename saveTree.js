@@ -39,9 +39,10 @@ const saveTree = async (game) => {
                 const betAmount = Math.floor(game.totalMoneyInTheMiddle * percentage)
                 game.bet(currentPlayer, betAmount)
             }
-            else if (betOption[1] == "x") {
+            else if (betOption.includes("x")) {
                 game.lastBetIndex = game.currentPlayerIndex
-                game.bet(currentPlayer, (betOption[0] - "0") * game.lastBet)
+                const multiplier = parseInt(betOption.replace("x", ""))
+                game.bet(currentPlayer, multiplier * game.lastBet)
             }
             else if (betOption == "undo") {
                 return "undo"

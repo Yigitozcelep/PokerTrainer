@@ -369,10 +369,8 @@ const getBetOptionResult = async (game, includeUndo = false) => {
             } else if (option === 'undo') {
                 className += ' undo';
             } else if (option.includes('%')) {
-                // For percentage options, add the percentage value as part of the class
                 className += ` ${option}`;
             } else if (option.includes('x')) {
-                // For multiplier options like 2x, 3x, 4x
                 className += ` ${option.toLowerCase().replace('x', 'bet')}`;
             }
             button.className = className;
