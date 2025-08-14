@@ -65,9 +65,9 @@ class Game {
         game.description = this.description
         game.lastBetIndex = this.lastBetIndex
         game.currentPlayerIndex = this.currentPlayerIndex
-        game.flop = this.flop
-        game.turn = this.turn
-        game.flop = this.flop
+        game.flop  = this.flop
+        game.turn  = this.turn
+        game.river = this.river
         return game
     }
 
