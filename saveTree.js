@@ -18,15 +18,15 @@ const saveTree = async (game) => {
             const currentPlayer = game.players[game.currentPlayerIndex]
             const betOption = await getBetOptionResult(game, true)
             
+            if (betOption == "check") { counter++ }
+            else counter = 0
+            
             if (betOption == "fold") {
                 game.fold(currentPlayer)
                 updateFoldedPlayer(currentPlayer)
             }
             else if (betOption == "call") {
                 game.bet(currentPlayer, game.lastBet)
-            }
-            else if (betOption == "check") {
-                counter++
             }
             else if (betOption == "all in") {
                 game.lastBetIndex = game.currentPlayerIndex
